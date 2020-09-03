@@ -1,5 +1,5 @@
 
-Copyright (c) 2020, Robert Oleynik
+Copyright (c) 2020, Robert John Oleynik
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
