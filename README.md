@@ -57,6 +57,7 @@ To edit `settings.json` file run:
 
 - [x] Use multiple configurations
 - [x] Switch between build types and configurations
+- [ ] Generate link for `compile_commands.json`
 - [ ] Display cmake errors in list
 - [ ] Display build errors in list
 - [ ] Run ctest and display results in test explorer
