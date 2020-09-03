@@ -20,4 +20,4 @@ TODO
 
 ## Docs
 
-See `:h cmake-nvim.txt` or [docs/cmake-nvim.txt]()
+See `:h cmake-nvim.txt` or [doc/cmake-nvim.txt](https://gitlab.com/robert-oleynik/cmake-nvim/-/blob/main/doc/cmake-nvim.txt)
