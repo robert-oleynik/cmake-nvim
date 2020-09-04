@@ -108,9 +108,18 @@ function M.configure()
             if config.definitions~=nil then
                 args = args..utils.build_config_definitions(config.definitions)
             end
-            local text = vim.api.nvim_call_function("execute",{"!"..M.settings.bin..args})
-            print(text)
-            return
+            local text = vim.api.nvim_call_function("system",{M.settings.bin..args})
+            vim.api.nvim_set_var("cmake_config_output", text)
+            -- local err = vim.api.nvim_get_vvar("shell_error")
+            print(err)
+            if not (err==0) then
+                vim.api.nvim_command[[ silent cgetexpr g:cmake_config_output ]]
+                vim.api.nvim_command[[ silent copen ]]
+                return false
+            end
+            print("Configuration done")
+
+            return true
         end
     end
 
@@ -134,7 +143,9 @@ function M.build()
             end
 
             if not utils.is_build_dir_configured(config.build_dir) then
-                M.configure(name)
+                if not M.configure() then
+                    return
+                end
             end
 
             local cfg = config
@@ -146,8 +157,16 @@ function M.build()
                 args=args..utils.build_args(config.build_args)
             end
 
-            local text = vim.api.nvim_call_function("execute",{"!"..M.settings.bin..args})
-            print(text)
+            local text = vim.api.nvim_call_function("system",{M.settings.bin..args})
+            vim.api.nvim_set_var("cmake_build_output", text)
+            -- local err = vim.api.nvim_get_vvar("shell_error")
+            print(err)
+            if not (err==0) then
+                vim.api.nvim_command[[ silent cgetexpr g:cmake_build_output ]]
+                vim.api.nvim_command[[ silent copen ]]
+                return
+            end
+            print("Build done")
 
             return
         end

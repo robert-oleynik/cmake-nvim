@@ -79,12 +79,12 @@ See `:h cmake-nvim.txt` or [doc/cmake-nvim.txt](https://gitlab.com/robert-oleyni
 ### :CMakeConfigure
 
     Run CMake to configure project. Uses current selected config. If no config
-    is selected, the first config is used.
+    is selected, the first config is used. Opens quickfix on error.
 
 ### :CMakeBuild
 
     Run CMake to build project. Uses current selected config. If no config is
-    selected, the first config is used.
+    selected, the first config is used. Opens quickfix on error.
 
 ### :CMakeClear
 
