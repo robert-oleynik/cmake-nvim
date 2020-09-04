@@ -135,4 +135,30 @@ CONFIGURATION FIELDS                                  *cmake-nvim-config-fields*
 ================================================================================
 COMMANDS                                                   *cmake-nvim-commands*
 
-TODO
+:CMakeConfigure                                                *:CMakeConfigure*
+
+    TODO
+
+:CMakeBuild                                                        *:CMakeBuild*
+
+    TODO
+
+:CMakeClean                                                        *:CMakeClean*
+
+    TODO
+
+:CMakeOpenSettings                                          *:CMakeOpenSettings*
+
+    TODO
+
+:CMakeLoadSettings                                          *:CMakeLoadSettings*
+
+    TODO
+
+:CMakeSelectBuildType [<build_type>]                     *:CMakeSelectBuildType*
+
+    TODO
+
+:CMakeSelectConfig [<config_name>]                          *:CMakeSelectConfig*
+
+    TODO
