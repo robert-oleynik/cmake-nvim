@@ -1,14 +1,15 @@
 *cmake-nvim.txt* CMake integration for Neovim.
 
-CONTENTS                    *cmake-nvim-contents*
+CONTENTS                                                   *cmake-nvim-contents*
 
 Introduction        |cmake-nvim-introduction|
 Install             |cmake-nvim-install|
 Usage               |cmake-nvim-usage|
 Configure Project   |cmake-nvim-settings-json|
+Commands            |cmake-nvim-commands|
 
 ================================================================================
-Introduction                *cmake-nvim-introduction*
+Introduction                                           *cmake-nvim-introduction*
 
 cmake-nvim integrates [cmake](https://cmake.org/) into 
 [neovim](https://neovim.io/). Using this plugin user can configure and build
@@ -17,18 +18,18 @@ This plugin is inspired by `vector-of-bool`'s
 [CMake Tools](https://github.com/microsoft/vscode-cmake-tools) for `vscode`
 
 ================================================================================
-Install                     *cmake-nvim-install*
+Install                                                     *cmake-nvim-install*
 
 Install with [vim-plug](https://github.com/junegunn/vim-plug)
 
     Plug 'robert-oleynik/cmake-nvim'
 
 ================================================================================
-Usage                       *cmake-nvim-usage*
+Usage                                                         *cmake-nvim-usage*
 
 For using cmake-nvim a `settings.json` file is required. This file is used to
-store the configurations. The `settings.json` file is located in the project's root
-directory next to the `CMakeLists.txt` file.
+store the configurations. The `settings.json` file is located in the project's
+root directory next to the `CMakeLists.txt` file.
 
 Project structure:
 
@@ -72,6 +73,66 @@ To edit `settings.json` file run:
     :CMakeOpenSettings
 
 ================================================================================
-CONFIGURE PROJECT           *cmake-nvim-settings-json*
+CONFIGURE PROJECT                                     *cmake-nvim-settings-json*
+
+A cmake project is configured using the local `settings.json` file. 
+
+FIELDS                                         *cmake-nvim-settings-json-fields*
+
+`cmake.bin`                                               *cmake-nvim-field-bin*
+
+    Used to set the path to cmake binary file. Default: 'cmake'
+
+`cmake.configurations`                         *cmake-nvim-field-configurations*
+
+    Used to set a list of configurations. At least one configuration is required
+    for usage.
+
+CONFIGURATION FIELDS                                  *cmake-nvim-config-fields*
+
+`config.build_args`                         *cmake-nvim-field-config-build-args*
+
+    TODO
+
+`config.build_dir`                           *cmake-nvim-field-config-build-dir*
+
+    Specifies cmake's build directory (Note: the path is passed using
+    `cmake -B <build_dir>`)
+
+    Replace the strings:
+        `%name%`        with `config.name`
+        `%build_type%`  with `config.build_type`
+
+`config.build_type`                         *cmake-nvim-field-config-build-type*
+
+    Specifies cmake's build type. If not specified the user cas switch between
+    build types using :CMakeSelectBuildType. (Note: passed using
+    `cmake -DCMAKE_BUILD_TYPE=<build_type>)
+
+    Possible values: "Debug", "Release", "RelWithDebSym", "MinSizeRel"
+
+`config.config_args`                             *cmake-nvim-field-config-args*
+
+    TODO
+
+`config.definitions`                             *cmake-nvim-field-definitions*
+
+    TODO
+
+`config.generator`                         *cmake-nvim-field-config-generators*
+
+    Specifies cmake's build system generator. (Note: Passed using
+    `cmake -G <generator>`)
+
+    Possible values: "Ninja", "Unix Makefiles", ...
+    (See https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html)
+
+`config.name`                                     *cmake-nvim-field-config-name*
+
+    Sets the name of the configuration. This field is required and used to
+    identify the configuration.
+
+================================================================================
+COMMANDS                                                   *cmake-nvim-commands*
 
 TODO
