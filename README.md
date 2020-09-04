@@ -61,6 +61,8 @@ To edit `settings.json` file run:
 - [ ] Display cmake errors in list
 - [ ] Display build errors in list
 - [ ] Run ctest and display results in test explorer
+- [ ] Build single target
+- [ ] Clean cmake
 
 ## Installation
 
@@ -84,7 +86,7 @@ See `:h cmake-nvim.txt` or [doc/cmake-nvim.txt](https://gitlab.com/robert-oleyni
     Run CMake to build project. Uses current selected config. If no config is
     selected, the first config is used.
 
-### :CMakeClean
+### :CMakeClear
 
     Remove all files from current build directory. The directory is specified
     by selected config. If no config is selected, the first config is used.

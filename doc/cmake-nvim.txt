@@ -157,7 +157,7 @@ COMMANDS                                                   *cmake-nvim-commands*
     Run CMake to build project. Uses current selected config. If no config is
     selected, the first config is used.
 
-:CMakeClean                                                        *:CMakeClean*
+:CMakeClear                                                        *:CMakeClear*
 
     Remove all files from current build directory. The directory is specified
     by selected config. If no config is selected, the first config is used.

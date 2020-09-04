@@ -156,7 +156,7 @@ function M.build()
     vim.api.nvim_err_writeln("cmake: No matching configuration with name '"..name.."' found")
 end
 
-function M.clean_config()
+function M.clear_config()
     local name = config_name
     if name==nil then
         for _,config in ipairs(M.settings.configs) do
@@ -176,7 +176,7 @@ function M.clean_config()
             if cfg.build_type==nil then
                 cfg.build_type = build_type
             end
-            vim.api.nvim_call_function("execute", {"!rm -Rf "..utils.parse_path(config.build_dir,cfg)})
+            vim.api.nvim_call_function("execute", {"!rm -rf "..utils.parse_path(config.build_dir,cfg)})
             return
         end
     end
