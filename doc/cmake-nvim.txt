@@ -92,12 +92,13 @@ CONFIGURATION FIELDS                                  *cmake-nvim-config-fields*
 
 `config.build_args`                         *cmake-nvim-field-config-build-args*
 
-    TODO
+    List of arguments passed after `cmake --build <build_dir>`. Configure
+    project if build dir doesn't contain `CMakeCache.txt` file
 
 `config.build_dir`                           *cmake-nvim-field-config-build-dir*
 
     Specifies cmake's build directory (Note: the path is passed using
-    `cmake -B <build_dir>`)
+    `cmake -B <build_dir>`). Default: "./build"
 
     Replace the strings:
         `%name%`        with `config.name`
@@ -113,11 +114,22 @@ CONFIGURATION FIELDS                                  *cmake-nvim-config-fields*
 
 `config.config_args`                             *cmake-nvim-field-config-args*
 
-    TODO
+    List of arguments passed to cmake during configuration.
 
 `config.definitions`                             *cmake-nvim-field-definitions*
 
-    TODO
+    List of keys and values passed to cmake during configuration. Use
+    true and false for cmake booleans.
+
+    Example:
+        ...
+        "definitions": {
+            "SOME_STRING": "value",
+            "SOME_BOOL": true,
+            "SOME_NUMBER": 42
+        }
+        ...
+        Runs: cmake ... -DSOME_STRING="value" -DSOME_BOOL=ON -DSOME_NUMBER=42
 
 `config.generator`                         *cmake-nvim-field-config-generators*
 
@@ -137,28 +149,35 @@ COMMANDS                                                   *cmake-nvim-commands*
 
 :CMakeConfigure                                                *:CMakeConfigure*
 
-    TODO
+    Run CMake to configure project. Uses current selected config. If no config
+    is selected, the first config is used.
 
 :CMakeBuild                                                        *:CMakeBuild*
 
-    TODO
+    Run CMake to build project. Uses current selected config. If no config is
+    selected, the first config is used.
 
 :CMakeClean                                                        *:CMakeClean*
 
-    TODO
+    Remove all files from current build directory. The directory is specified
+    by selected config. If no config is selected, the first config is used.
 
 :CMakeOpenSettings                                          *:CMakeOpenSettings*
 
-    TODO
+    Start edit `settings.json` file.
 
 :CMakeLoadSettings                                          *:CMakeLoadSettings*
 
-    TODO
+    Reload `settings.json`. Resets the build type and selected config (Note: 
+    The `settings.json` fill will be reloaded on file save and root directory
+    changes)
 
 :CMakeSelectBuildType [<build_type>]                     *:CMakeSelectBuildType*
 
-    TODO
+    Sets current cmake build type. If not build type is specified, a dialog for
+    selection is opened.
 
 :CMakeSelectConfig [<config_name>]                          *:CMakeSelectConfig*
 
-    TODO
+    Set current config name. If no name is specified, a dialog for selection is
+    opened.
