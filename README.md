@@ -71,3 +71,40 @@ Install with [vim-plug](https://github.com/junegunn/vim-plug)
 ## Docs
 
 See `:h cmake-nvim.txt` or [doc/cmake-nvim.txt](https://gitlab.com/robert-oleynik/cmake-nvim/-/blob/main/doc/cmake-nvim.txt)
+
+## Commands
+
+### :CMakeConfigure
+
+    Run CMake to configure project. Uses current selected config. If no config
+    is selected, the first config is used.
+
+### :CMakeBuild
+
+    Run CMake to build project. Uses current selected config. If no config is
+    selected, the first config is used.
+
+### :CMakeClean
+
+    Remove all files from current build directory. The directory is specified
+    by selected config. If no config is selected, the first config is used.
+
+### :CMakeOpenSettings
+
+    Start edit `settings.json` file.
+
+### :CMakeLoadSettings
+
+    Reload `settings.json`. Resets the build type and selected config (Note: 
+    The `settings.json` fill will be reloaded on file save and root directory
+    changes)
+
+### :CMakeSelectBuildType [<build_type>]
+
+    Sets current cmake build type. If not build type is specified, a dialog for
+    selection is opened.
+
+### :CMakeSelectConfig [<config_name>]
+
+    Set current config name. If no name is specified, a dialog for selection is
+    opened.
