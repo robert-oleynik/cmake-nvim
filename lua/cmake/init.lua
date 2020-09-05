@@ -254,7 +254,6 @@ function M.clear_config()
 end
 
 function M.update_compile_commands(config)
-    print(vim.inspect(config))
     if config.compile_commands_link == nil then
         return
     end
@@ -262,9 +261,9 @@ function M.update_compile_commands(config)
     if config~=nil then
         local path = utils.parse_path(config.build_dir, config, build_type)
         local cmd = "ln -sfT "..path.."compile_commands.json "..config.compile_commands_link
-        print(cmd)
+        -- print(cmd)
         local out = vim.api.nvim_call_function("system", {cmd})
-        if vim.api.nvim_get_vvar("shell_error")~=nil then
+        if vim.api.nvim_get_vvar("shell_error")~=0 then
             vim.api.nvim_err_writeln(out)
         end
     else
@@ -272,9 +271,9 @@ function M.update_compile_commands(config)
             if config_name==config.name then
                 local path = utils.parse_path(config.build_dir, config, build_type)
                 local cmd = "ln -sfT "..path.."compile_commands.json "..config.compile_commands_link
-                print(cmd)
+                -- print(cmd)
                 local out = vim.api.nvim_call_function("system", {cmd})
-                if vim.api.nvim_get_vvar("shell_error")~=nil then
+                if vim.api.nvim_get_vvar("shell_error")~=0 then
                     vim.api.nvim_err_writeln(out)
                 end
             end
