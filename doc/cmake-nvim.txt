@@ -164,6 +164,10 @@ COMMANDS                                                   *cmake-nvim-commands*
     specified cmake only builds this target (Note: adds option 
     `--target <target>`).
 
+:CMakeClean                                                        *:CMakeClean*
+
+    Remove all built objects and other output files from build directory.
+
 :CMakeClear                                                        *:CMakeClear*
 
     Remove all files from current build directory. The directory is specified

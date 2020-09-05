@@ -62,7 +62,7 @@ To edit `settings.json` file run:
 - [x] Display build errors in list
 - [ ] Run ctest and display results in test explorer
 - [X] Build single target
-- [ ] Clean cmake
+- [X] Clean cmake build directory
 
 ## Installation
 
@@ -87,6 +87,10 @@ See `:h cmake-nvim.txt` or [doc/cmake-nvim.txt](https://gitlab.com/robert-oleyni
     selected, the first config is used. Opens quickfix on error. If target is
     specified cmake only builds this target (Note: adds option 
     `--target <target>`).
+
+### :CMakeClean
+
+    Remove all built objects and other output files from build directory.
 
 ### :CMakeClear
 

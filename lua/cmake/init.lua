@@ -153,17 +153,14 @@ function M.build(target)
                 config.build_dir = cwd.."/build/"
             end
 
-            if not utils.is_build_dir_configured(config.build_dir) then
+            local build_dir = utils.parse_path(config.build_dir, config, build_type)
+            if not utils.is_build_dir_configured(build_dir) then
                 if not M.configure() then
                     return
                 end
             end
 
-            local cfg = config
-            if cfg.build_type==nil then
-                cfg.build_type = build_type
-            end
-            local args = " --build "..utils.parse_path(config.build_dir, config, build_type)
+            local args = " --build "..build_dir
             if target~=nil or target~="" then
                 args=args.." --target "..target
             end
@@ -187,6 +184,45 @@ function M.build(target)
     end
 
     vim.api.nvim_err_writeln("cmake: No matching configuration with name '"..name.."' found")
+end
+
+function M.clean()
+    local name = config_name
+    if name==nil then
+        for _,config in ipairs(M.settings.configs) do
+            name = config.name
+            break
+        end
+    end
+
+    for _,config in ipairs(M.settings.configs) do
+        if name == config.name then
+            if config.build_dir == nil then
+                local cwd = vim.api.nvim_eval("getcwd()")
+                config.build_dir = cwd.."/build/"
+            end
+
+            local build_dir = utils.parse_path(config.build_dir, config, build_type)
+            if not utils.is_build_dir_configured(build_dir) then
+                vim.api.nvim_err_writeln("Selected config '"..name.."' not configured!")
+                return
+            end
+
+            local args = " --build "..build_dir.." --target clean"
+            print(M.settings.bin..args)
+            local output = vim.api.nvim_call_function("system",{M.settings.bin..args})
+            if vim.api.nvim_get_vvar("shell_error")~=0 then
+                vim.api.nvim_err_writeln(output)
+                return
+            end
+            print("Config cleaned")
+
+            return
+        end
+    end
+
+    vim.api.nvim_err_writeln("cmake: No matching configuration with name '"..name.."' found")
+
 end
 
 function M.clear_config()

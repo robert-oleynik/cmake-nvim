@@ -39,6 +39,7 @@ augroup cmake_nvim
 augroup END
 
 command! -nargs=? CMakeBuild call luaeval("require('cmake').build(_A)","<args>")
+command! CMakeClean lua require('cmake').clean()
 command! CMakeClear lua require('cmake').clear_config()
 command! CMakeConfigure lua require('cmake').configure()
 command! CMakeLoadSettings lua require('cmake').load_settings()
