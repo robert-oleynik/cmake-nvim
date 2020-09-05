@@ -157,10 +157,12 @@ COMMANDS                                                   *cmake-nvim-commands*
     Run CMake to configure project. Uses current selected config. If no config
     is selected, the first config is used. Opens quickfix on error.
 
-:CMakeBuild                                                        *:CMakeBuild*
+:CMakeBuild [<target>]                                             *:CMakeBuild*
 
     Run CMake to build project. Uses current selected config. If no config is
-    selected, the first config is used. Opens quickfix on error.
+    selected, the first config is used. Opens quickfix on error. If target is
+    specified cmake only builds this target (Note: adds option 
+    `--target <target>`).
 
 :CMakeClear                                                        *:CMakeClear*
 

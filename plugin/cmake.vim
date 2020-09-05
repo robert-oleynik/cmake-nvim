@@ -38,12 +38,12 @@ augroup cmake_nvim
     autocmd BufWritePost settings.json lua require('cmake').update_settings()
 augroup END
 
-command! CMakeOpenSettings edit settings.json
-command! CMakeLoadSettings lua require('cmake').load_settings()
-command! CMakeConfigure lua require('cmake').configure()
-command! CMakeBuild lua require('cmake').build()
+command! -nargs=? CMakeBuild call luaeval("require('cmake').build(_A)","<args>")
 command! CMakeClear lua require('cmake').clear_config()
-command! -nargs=? CMakeSelectBuildType call luaeval("require('cmake').select_build_type(_A)","<args>")
-command! -nargs=? CMakeSelectConfig call luaeval("require('cmake').select_config(_A)","<args>")
+command! CMakeConfigure lua require('cmake').configure()
+command! CMakeLoadSettings lua require('cmake').load_settings()
+command! CMakeOpenSettings edit settings.json
 command! CMakePrintBuildType lua require('cmake').print_build_type()
 command! CMakePrintConfig lua require('cmake').print_config()
+command! -nargs=? CMakeSelectBuildType call luaeval("require('cmake').select_build_type(_A)","<args>")
+command! -nargs=? CMakeSelectConfig call luaeval("require('cmake').select_config(_A)","<args>")

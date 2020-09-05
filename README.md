@@ -61,7 +61,7 @@ To edit `settings.json` file run:
 - [x] Display cmake errors in list
 - [x] Display build errors in list
 - [ ] Run ctest and display results in test explorer
-- [ ] Build single target
+- [X] Build single target
 - [ ] Clean cmake
 
 ## Installation
@@ -81,10 +81,12 @@ See `:h cmake-nvim.txt` or [doc/cmake-nvim.txt](https://gitlab.com/robert-oleyni
     Run CMake to configure project. Uses current selected config. If no config
     is selected, the first config is used. Opens quickfix on error.
 
-### :CMakeBuild
+### :CMakeBuild [<target>]
 
     Run CMake to build project. Uses current selected config. If no config is
-    selected, the first config is used. Opens quickfix on error.
+    selected, the first config is used. Opens quickfix on error. If target is
+    specified cmake only builds this target (Note: adds option 
+    `--target <target>`).
 
 ### :CMakeClear
 
@@ -110,7 +112,6 @@ See `:h cmake-nvim.txt` or [doc/cmake-nvim.txt](https://gitlab.com/robert-oleyni
 
     Set current config name. If no name is specified, a dialog for selection is
     opened.
-
 
 ### :CMakePrintBuildType
 

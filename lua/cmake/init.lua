@@ -137,7 +137,7 @@ function M.configure()
     vim.api.nvim_err_writeln("cmake: No matching configuration with name '"..name.."' found")
 end
 
-function M.build()
+function M.build(target)
     local name = config_name
     if name==nil then
         for _,config in ipairs(M.settings.configs) do
@@ -164,10 +164,14 @@ function M.build()
                 cfg.build_type = build_type
             end
             local args = " --build "..utils.parse_path(config.build_dir, config, build_type)
+            if target~=nil or target~="" then
+                args=args.." --target "..target
+            end
             if config.build_args~=nil then
                 args=args..utils.build_args(config.build_args)
             end
 
+            print(M.settings.bin..args)
             local text = vim.api.nvim_call_function("system",{M.settings.bin..args})
             vim.api.nvim_set_var("cmake_build_output", text)
             local err = vim.api.nvim_get_vvar("shell_error")
