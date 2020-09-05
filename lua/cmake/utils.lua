@@ -78,11 +78,20 @@ end
 
 function M.is_build_dir_configured(dir)
     local cache_file = io.open(dir.."/CMakeCache.txt")
-    local res = cache_file~=nil
-    if res then
+    if cache_file~=nil then
         io.close(cache_file)
+        return true
     end
-    return res
+    return false
+end
+
+function M.file_exists(file)
+    local f = io.open(file)
+    if f~=nil then
+        io.close(f)
+        return true
+    end
+    return false
 end
 
 return M

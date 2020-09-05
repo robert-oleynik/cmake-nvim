@@ -139,6 +139,11 @@ CONFIGURATION FIELDS                                  *cmake-nvim-config-fields*
     Possible values: "Ninja", "Unix Makefiles", ...
     (See https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html)
 
+`config.compile_commands_link`   *cmake-nvim-field-config-compile_commands_link*
+
+    Specifies the path were to link `compile_commands.json` file to. If set
+    the flag -DCMAKE_ENABLE_COMPILE_COMMANDS=ON is added to configuration.
+
 `config.name`                                     *cmake-nvim-field-config-name*
 
     Sets the name of the configuration. This field is required and used to
@@ -171,6 +176,14 @@ COMMANDS                                                   *cmake-nvim-commands*
     Reload `settings.json`. Resets the build type and selected config (Note: 
     The `settings.json` fill will be reloaded on file save and root directory
     changes)
+
+:CMakePrintBuildType                                      *:CMakePrintBuildType*
+
+    Prints current cmake build type.
+
+:CMakePrintConfig                                            *:CMakePrintConfig*
+
+    Prints name of selected configuration.
 
 :CMakeSelectBuildType [<build_type>]                     *:CMakeSelectBuildType*
 

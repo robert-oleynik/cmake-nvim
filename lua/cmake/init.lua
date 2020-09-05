@@ -36,6 +36,7 @@ local config_name = nil
 
 function M.load_settings()
     build_type = "Debug"
+    config_name = nil
     M.update_settings()
 end
 
@@ -74,6 +75,11 @@ function M.update_settings()
                 M.settings.bin = cmake["bin"]
             end
         end
+        if config_name==nil then
+            for _,config in pairs(M.settings.configs) do
+                M.update_compile_commands(config)
+            end
+        end
     end
 end
 
@@ -96,10 +102,8 @@ function M.configure()
             if config.generator~=nil then
                 args=args.." -G \""..config.generator.."\""
             end
-            if config.build_dir~=nil then
-                local path = utils.parse_path(config.build_dir, config, build_type)
-                args=args.." -B \""..path.."\""
-            end
+            local path = utils.parse_path(config.build_dir, config, build_type)
+            args=args.." -B \""..path.."\""
             if config.build_type~=nil then
                 args=args.." -DCMAKE_BUILD_TYPE=\""..config.build_type.."\""
             else
@@ -108,14 +112,21 @@ function M.configure()
             if config.definitions~=nil then
                 args = args..utils.build_config_definitions(config.definitions)
             end
+            if config.compile_commands_link~=nil then
+                args = args.." -DENABLE_COMPILE_COMMANDS=ON"
+            end
+            print(M.settings.bin..args)
             local text = vim.api.nvim_call_function("system",{M.settings.bin..args})
             vim.api.nvim_set_var("cmake_config_output", text)
-            -- local err = vim.api.nvim_get_vvar("shell_error")
-            print(err)
+            local err = vim.api.nvim_get_vvar("shell_error")
             if not (err==0) then
                 vim.api.nvim_command[[ silent cgetexpr g:cmake_config_output ]]
                 vim.api.nvim_command[[ silent copen ]]
                 return false
+            else
+                if config.compile_commands_link~=nil and not utils.file_exists(config.compile_commands_link) then
+                    M.update_compile_commands(config)
+                end
             end
             print("Configuration done")
 
@@ -159,8 +170,7 @@ function M.build()
 
             local text = vim.api.nvim_call_function("system",{M.settings.bin..args})
             vim.api.nvim_set_var("cmake_build_output", text)
-            -- local err = vim.api.nvim_get_vvar("shell_error")
-            print(err)
+            local err = vim.api.nvim_get_vvar("shell_error")
             if not (err==0) then
                 vim.api.nvim_command[[ silent cgetexpr g:cmake_build_output ]]
                 vim.api.nvim_command[[ silent copen ]]
@@ -203,11 +213,46 @@ function M.clear_config()
     vim.api.nvim_err_writeln("cmake: No matching configuration with name '"..name.."' found")
 end
 
+function M.update_compile_commands(config)
+    print(vim.inspect(config))
+    if config.compile_commands_link == nil then
+        return
+    end
+
+    if config~=nil then
+        local path = utils.parse_path(config.build_dir, config, build_type)
+        local cmd = "ln -sfT "..path.."compile_commands.json "..config.compile_commands_link
+        print(cmd)
+        local out = vim.api.nvim_call_function("system", {cmd})
+        if vim.api.nvim_get_vvar("shell_error")~=nil then
+            vim.api.nvim_err_writeln(out)
+        end
+    else
+        for _,config in ipairs(M.settings.configs) do
+            if config_name==config.name then
+                local path = utils.parse_path(config.build_dir, config, build_type)
+                local cmd = "ln -sfT "..path.."compile_commands.json "..config.compile_commands_link
+                print(cmd)
+                local out = vim.api.nvim_call_function("system", {cmd})
+                if vim.api.nvim_get_vvar("shell_error")~=nil then
+                    vim.api.nvim_err_writeln(out)
+                end
+            end
+        end
+    end
+end 
+
 function M.select_build_type(build_type_str)
     if build_type_str==nil or build_type_str=="" then
         ui.create_selection({"Debug","Release","RelWithDebInfo","MinSizeRel"}, M.select_build_type)
     else
         build_type=build_type_str
+        for _,config in pairs(M.settings.configs) do
+            if config_name == config.name or config_name==nil then
+                M.update_compile_commands(config)
+                return
+            end
+        end
     end
 end
 
@@ -220,7 +265,27 @@ function M.select_config(config_name_str)
         ui.create_selection(config_names, M.select_config)
     else
         config_name=config_name_str
+        for _,config in pairs(M.settings.configs) do
+            if config_name == config.name then
+                M.update_compile_commands(config)
+            end
+        end
     end
+end
+
+function M.print_config()
+    if config_name~=nil then
+        print(config_name)
+    else
+        for _,config in pairs(M.settings.configs) do
+            print(config.name)
+            break
+        end
+    end
+end
+
+function M.print_build_type()
+    print(build_type)
 end
 
 return M

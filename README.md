@@ -57,7 +57,7 @@ To edit `settings.json` file run:
 
 - [x] Use multiple configurations
 - [x] Switch between build types and configurations
-- [ ] Generate link for `compile_commands.json`
+- [x] Generate link for `compile_commands.json`
 - [x] Display cmake errors in list
 - [x] Display build errors in list
 - [ ] Run ctest and display results in test explorer
@@ -110,3 +110,12 @@ See `:h cmake-nvim.txt` or [doc/cmake-nvim.txt](https://gitlab.com/robert-oleyni
 
     Set current config name. If no name is specified, a dialog for selection is
     opened.
+
+
+### :CMakePrintBuildType
+
+    Prints current cmake build type.
+
+### :CMakePrintConfig
+
+    Prints name of selected configuration.
